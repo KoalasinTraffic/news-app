@@ -18,12 +18,12 @@ const UserSchema = models.loadSchema('User', {
 });
 
 // Sync DB schema
-UserSchema.syncDB((err: Error | null) => {
-  if (err) throw err;
+UserSchema.syncDB((error: Error | null) => {
+  if (error) throw error;
   console.log('User table synced');
 });
 
 export const User = models.instance.User as {
-  new (data: IUser): IUser & { save: (cb: (err?: Error) => void) => void };
-  findOne: (query: Partial<IUser>, callback: (err: Error | null, user?: IUser) => void) => void;
+  new (data: IUser): IUser & { save: (cb: (error?: Error) => void) => void };
+  findOne: (query: Partial<IUser>, callback: (error: Error | null, user?: IUser) => void) => void;
 };
