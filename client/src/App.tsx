@@ -1,5 +1,5 @@
-import './App.css'
-import Chart from './components/Chart.tsx'
+import './App.css';
+import Chart from './components/Chart.tsx';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <h1>Vite + React</h1>
       <Chart />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

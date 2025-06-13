@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 
 //const SYMBOL = 'BINANCE:BTCUSDT';
 const SYMBOL = 'AAPL';
@@ -13,14 +13,12 @@ export default function Chart() {
   useEffect(() => {
     const fetchMarketStatus = async () => {
       try {
-        const res = await axios.get('https://finnhub.io/api/v1/stock/market-status',
-          {
-            params: {
-              exchange: 'US',
-              token: API_KEY,
-            },
-          }
-        );
+        const res = await axios.get('https://finnhub.io/api/v1/stock/market-status', {
+          params: {
+            exchange: 'US',
+            token: API_KEY,
+          },
+        });
         setIsOpen(res.data.isOpen);
       } catch (err) {
         console.err(err);
@@ -67,12 +65,12 @@ export default function Chart() {
   }, []);
 
   if (!isOpen) {
-    return (
-      <div>Market Closed</div>
-    );
+    return <div>Market Closed</div>;
   } else {
     return (
-      <div>{SYMBOL} Live Price: ${price}</div>
+      <div>
+        {SYMBOL} Live Price: ${price}
+      </div>
     );
   }
-};
+}

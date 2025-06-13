@@ -2,14 +2,14 @@
   "compilerOptions": {
     "strict": true,
     "allowImportingTsExtensions": true,
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
   "include": ["src"]
 }
