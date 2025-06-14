@@ -1,7 +1,6 @@
 import { User } from '@/models/user.ts';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
 
 export const comparePassword = async (password: string, hashedPassword: string) => {
   return bcryptjs.compare(password, hashedPassword);
@@ -16,7 +15,6 @@ export const generateAccessToken = (user: any) => {
   return jwt.sign(
     {
       user: {
-        id: user.id,
         username: user.username,
       },
     },
@@ -25,41 +23,18 @@ export const generateAccessToken = (user: any) => {
   );
 };
 
-export const getUserByToken = async (
-  userId: string,
-  userName: string,
-  userEmail: string
-): Promise<any> => {
+// Cassandra is optimized for searching by primary key
+export const getUserById = async (userId: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
-        id: userId,
-        username: userName.toLowerCase(),
-        email: userEmail.toLowerCase(),
+        username: userId.toLowerCase(),
       },
       (error, user) => {
         if (error) return reject(error);
         resolve(user);
       }
     );
-  });
-};
-
-export const getUserByName = async (userName: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    User.findOne({ username: userName.toLowerCase() }, (error, user) => {
-      if (error) return reject(error);
-      resolve(user);
-    });
-  });
-};
-
-export const getUserByEmail = async (userEmail: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    User.findOne({ email: userEmail.toLowerCase() }, (error, user) => {
-      if (error) return reject(error);
-      resolve(user);
-    });
   });
 };
 
@@ -70,7 +45,6 @@ export const createUser = async (
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
     const newUser = new User({
-      id: uuidv4(),
       username: userName.toLowerCase(),
       email: userEmail.toLowerCase(),
       password: userPassword,
@@ -88,7 +62,7 @@ export const deleteUserById = async (userId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     User.delete(
       {
-        id: userId,
+        id: userId.toLowerCase(),
       },
       (error: Error | null) => {
         if (error) return reject(error);

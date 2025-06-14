@@ -1,14 +1,19 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuthContext } from '../contexts';
 
 const SYMBOL = 'BINANCE:BTCUSDT';
 //const SYMBOL = 'AAPL';
 const API_KEY = import.meta.env.VITE_FINNHUB;
 
 export default function Chart() {
+  const navigate = useNavigate();
+  const socketRef = useRef<WebSocket | null>(null);
+  const { authLogout } = useAuthContext();
+
   const [isOpen, setIsOpen] = useState(false);
   const [price, setPrice] = useState(0);
-  const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const fetchMarketStatus = async () => {
@@ -65,8 +70,14 @@ export default function Chart() {
     };
   }, []);
 
+  const handleLogout = async () => {
+    await authLogout();
+    navigate('/login');
+  };
+
   return (
     <>
+      <button onClick={handleLogout}>Log out</button>
       <div>{isOpen ? 'Market Open' : 'Market Closed'}</div>
       <div>
         {SYMBOL} Live Price: ${price}

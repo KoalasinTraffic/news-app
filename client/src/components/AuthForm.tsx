@@ -4,8 +4,8 @@ import { useAuthContext } from '../contexts';
 
 export default function AuthForm({ isLogin }) {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { isAuth, authLogin, authRegister } = useAuthContext();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -14,7 +14,7 @@ export default function AuthForm({ isLogin }) {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleSubmit = async (event) => {
-    //event.preventDefault();
+    event.preventDefault();
     let res = '';
     if (isLogin) {
       res = await authLogin(username, password);
@@ -109,7 +109,7 @@ export default function AuthForm({ isLogin }) {
           <button type="submit">{isLogin ? 'Log in' : 'Sign up'}</button>
         </form>
 
-        <p>{'\n'}</p>
+        <p>{'\u00A0'}</p>
 
         {!isLogin ? (
           <a href="/login">Already have an account? Log in here.</a>
