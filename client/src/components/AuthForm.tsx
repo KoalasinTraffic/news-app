@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuthContext } from '../contexts';
 
-export default function AuthForm({ isLogin }) {
+export default function AuthForm(props: { isLogin: boolean }) {
+  const { isLogin } = props;
   const navigate = useNavigate();
   const { isAuth, authLogin, authRegister } = useAuthContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -13,7 +14,7 @@ export default function AuthForm({ isLogin }) {
   const [email, setEmail] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     let res = '';
     if (isLogin) {

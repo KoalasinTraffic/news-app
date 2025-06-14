@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 
 import {
@@ -24,6 +25,10 @@ interface AuthContextProps {
   isAuth: () => Promise<boolean>;
 }
 
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const useAuthContext = () => {
@@ -34,7 +39,7 @@ export const useAuthContext = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Verify authentication
   const authLoad = async (): Promise<any> => {
     console.log('CLIENT authLoad');
