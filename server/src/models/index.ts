@@ -1,11 +1,12 @@
-import expressCassandra from 'express-cassandra';
+import ExpressCassandra from 'express-cassandra';
 
-const models = expressCassandra.createClient({
+const models = ExpressCassandra.createClient({
   clientOptions: {
     contactPoints: ['172.17.0.2'],
     localDataCenter: 'datacenter1',
-    keyspace: 'my_keyspace',
-    queryOptions: { consistency: expressCassandra.consistencies.one },
+    protocolOptions: { port: 9042 },
+    keyspace: 'mykeyspace',
+    queryOptions: { consistency: ExpressCassandra.consistencies.one },
   },
   ormOptions: {
     defaultReplicationStrategy: {
