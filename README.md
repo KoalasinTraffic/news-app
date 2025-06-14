@@ -2,7 +2,8 @@
 
 Create client/.env
 ```
-REACT_APP_FINNHUB=
+VITE_API_URL="http://localhost:5000"
+VITE_FINNHUB=xxxxxxxxx
 ```
 
 Create server/.env
@@ -17,13 +18,6 @@ Run dependency installation script
 ```
 npm install
 npm run install
-```
-
-Setup server
-```
-cd server
-npx prisma generate
-npx prisma db push
 ```
 
 Start development client and server

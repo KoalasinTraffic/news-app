@@ -12,7 +12,7 @@ export const hashPassword = async (password: string) => {
   return bcryptjs.hash(password, salt);
 };
 
-export const generateAccessToken = (user) => {
+export const generateAccessToken = (user: any) => {
   return jwt.sign(
     {
       user: {
@@ -76,7 +76,7 @@ export const createUser = async (
       password: userPassword,
     });
 
-    newUser.save((error: Error) => {
+    newUser.save((error: Error | undefined) => {
       if (error) return reject(error);
       resolve(newUser);
     });
@@ -86,9 +86,14 @@ export const createUser = async (
 // In Cassandra, cannot delete by non-primary fields
 export const deleteUserById = async (userId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    User.delete({ id: userId }, (error: Error | null) => {
-      if (error) return reject(error);
-      resolve();
-    });
+    User.delete(
+      {
+        id: userId,
+      },
+      (error: Error | null) => {
+        if (error) return reject(error);
+        resolve();
+      }
+    );
   });
 };

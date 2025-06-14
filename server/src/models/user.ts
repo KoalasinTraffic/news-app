@@ -2,8 +2,9 @@ import models from './index';
 
 interface IUser {
   id: string;
-  name: string;
+  username: string;
   email: string;
+  password: string;
 }
 
 const UserSchema = models.loadSchema('User', {

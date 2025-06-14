@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 
-//const SYMBOL = 'BINANCE:BTCUSDT';
-const SYMBOL = 'AAPL';
+const SYMBOL = 'BINANCE:BTCUSDT';
+//const SYMBOL = 'AAPL';
 const API_KEY = import.meta.env.VITE_FINNHUB;
 
 export default function Chart() {
   const [isOpen, setIsOpen] = useState(false);
   const [price, setPrice] = useState(0);
-  const socketRef = useRef(null);
+  const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const fetchMarketStatus = async () => {
@@ -21,7 +21,7 @@ export default function Chart() {
         });
         setIsOpen(res.data.isOpen);
       } catch (err) {
-        console.err(err);
+        console.error(err);
       }
     };
 
@@ -30,19 +30,20 @@ export default function Chart() {
 
       socketRef.current.onopen = () => {
         console.log('OPEN');
-        socketRef.current.send(JSON.stringify({ type: 'subscribe', symbol: SYMBOL }));
+        if (socketRef.current) {
+          socketRef.current.send(JSON.stringify({ type: 'subscribe', symbol: SYMBOL }));
+        }
       };
 
-      socketRef.current.onmessage = (event) => {
+      socketRef.current.onmessage = (event: any) => {
         const data = JSON.parse(event.data);
-        console.log(data);
         if (data.type === 'trade') {
           setPrice(data.data[0].p); // 'p' is the price
         }
       };
 
       socketRef.current.onclose = () => {
-        if (socketRef.current.readyState === WebSocket.OPEN) {
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
           socketRef.current.send(JSON.stringify({ type: 'unsubscribe', symbol: SYMBOL }));
         }
         console.log('CLOSE');
@@ -64,13 +65,12 @@ export default function Chart() {
     };
   }, []);
 
-  if (!isOpen) {
-    return <div>Market Closed</div>;
-  } else {
-    return (
+  return (
+    <>
+      <div>{isOpen ? 'Market Open' : 'Market Closed'}</div>
       <div>
         {SYMBOL} Live Price: ${price}
       </div>
-    );
-  }
+    </>
+  );
 }

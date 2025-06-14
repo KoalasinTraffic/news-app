@@ -1,7 +1,7 @@
 {
   "name": "news-app",
   "scripts": {
-    "client": "npm run start --prefix client",
+    "client": "npm run dev --prefix client",
     "client-install": "npm install --prefix client",
     "client-format": "npm run format --prefix client",
 

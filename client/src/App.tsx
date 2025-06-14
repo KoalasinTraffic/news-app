@@ -1,12 +1,21 @@
+import { BrowserRouter, Route, Routes } from 'react-router';
 import './App.css';
-import Chart from './components/Chart.tsx';
+import { AuthForm, Chart, ProtectedRoute } from './components';
+import { AuthProvider } from './contexts';
 
 function App() {
   return (
-    <>
-      <h1>Vite + React</h1>
-      <Chart />
-    </>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<AuthForm isLogin={true} />} />
+          <Route path="/register" element={<AuthForm isLogin={false} />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Chart />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
