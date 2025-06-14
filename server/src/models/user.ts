@@ -10,12 +10,11 @@ interface IUser {
 const UserSchema = models.loadSchema('User', {
   table_name: 'users',
   fields: {
-    id: 'uuid',
     username: 'text',
     email: 'text',
     password: 'text',
   },
-  key: ['id'],
+  key: ['username'],
 });
 
 // Sync DB schema

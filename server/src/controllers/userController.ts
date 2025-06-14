@@ -2,9 +2,7 @@ import {
   comparePassword,
   createUser,
   generateAccessToken,
-  getUserByEmail,
-  getUserByName,
-  getUserByToken,
+  getUserById,
   hashPassword,
 } from '@/services/userService.ts';
 import { NextFunction, Request, Response } from 'express';
@@ -15,7 +13,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction): 
   try {
     // req.user is set by middleware authUser
     if (req.user) {
-      const userObject = await getUserByToken(req.user.id, req.user.username, req.user.email);
+      const userObject = await getUserById(req.user.username);
       if (userObject) {
         console.log(`user '${userObject.username}' found`);
         // TODO: convert userObject to an actual UserObject before sending to client
@@ -42,7 +40,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
       return;
     }
     // Check if account exists
-    const userObject = await getUserByName(username);
+    const userObject = await getUserById(username);
     if (userObject) {
       const isMatch = await comparePassword(password, userObject.password);
       if (isMatch) {
@@ -78,14 +76,9 @@ export const registerUser = async (
       return;
     }
     // Check if accounts exist
-    const userExists = await getUserByName(username);
+    const userExists = await getUserById(username);
     if (userExists) {
       res.status(400).json({ message: 'Username already taken.' });
-      return;
-    }
-    const emailExists = await getUserByEmail(email);
-    if (emailExists) {
-      res.status(400).json({ message: 'Email already registered.' });
       return;
     }
     // Create account

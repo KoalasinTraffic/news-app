@@ -1,11 +1,16 @@
-import expressCassandra from 'express-cassandra';
+import ExpressCassandra from 'express-cassandra';
 
-const models = expressCassandra.createClient({
+/*
+contactPoint: 127.0.0.1 (localhost)
+localDataCenter: `docker exec -it cassandra nodetool status`
+*/
+const models = ExpressCassandra.createClient({
   clientOptions: {
-    contactPoints: ['172.17.0.2'],
+    contactPoints: ['127.0.0.1'],
     localDataCenter: 'datacenter1',
-    keyspace: 'my_keyspace',
-    queryOptions: { consistency: expressCassandra.consistencies.one },
+    protocolOptions: { port: 9042 },
+    keyspace: 'news_app',
+    queryOptions: { consistency: ExpressCassandra.consistencies.one },
   },
   ormOptions: {
     defaultReplicationStrategy: {
