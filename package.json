@@ -1,0 +1,24 @@
+{
+  "name": "news-app",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "client-install": "npm install --prefix client",
+    "client-format": "npm run format --prefix client",
+
+    "server": "npm run server --prefix server",
+    "server-install": "npm install --prefix server",
+    "server-format": "npm run format --prefix server",
+
+    "install": "concurrently \"npm run server-install\" \"npm run client-install\"",
+    "format": "concurrently \"npm run server-format\" \"npm run client-format\"",
+
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoalasinTraffic/news-app.git"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
