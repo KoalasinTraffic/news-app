@@ -2,7 +2,9 @@
   "name": "news-server",
   "type": "module",
   "scripts": {
-    "server": "tsx watch src",
+    "dev": "tsx watch src",
+    "server": "node dist/index.js",
+    "build": "tsc",
     "format": "prettier --write src"
   },
   "dependencies": {
