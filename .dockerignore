@@ -1,0 +1,16 @@
+node_modules
+*.log
+.env
+.env.*
+
+Dockerfile
+.dockerignore
+
+.DS_Store
+*.swp
+*.swo
+.idea
+.vscode
+
+/build
+/dist
