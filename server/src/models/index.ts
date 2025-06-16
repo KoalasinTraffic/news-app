@@ -1,7 +1,6 @@
 import ExpressCassandra from 'express-cassandra';
 
 /*
-contactPoint: 127.0.0.1 (localhost)
 localDataCenter: `docker exec -it cassandra nodetool status`
 */
 

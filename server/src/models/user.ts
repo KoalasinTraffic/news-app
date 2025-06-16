@@ -1,7 +1,6 @@
-import models from './index';
+import models from './index.js';
 
 interface IUser {
-  id: string;
   username: string;
   email: string;
   password: string;
@@ -24,6 +23,9 @@ UserSchema.syncDB((error: Error | null) => {
 });
 
 export const User = models.instance.User as {
-  new (data: IUser): IUser & { save: (cb: (error?: Error) => void) => void };
+  new (data: IUser): IUser & {
+    save: (cb: (error?: Error) => void) => void;
+  };
   findOne: (query: Partial<IUser>, callback: (error: Error | null, user?: IUser) => void) => void;
+  delete: (query: Partial<IUser>, callback: (error: Error | null) => void) => void;
 };

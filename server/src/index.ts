@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 dotenv.config();
 
-import userRouter from '@/routes/userRoutes.ts';
+import userRouter from './routes/userRoutes.js';
 
 const allowedOrigins = ['http://localhost:3000', 'https://news-client-llen.onrender.com'];
 

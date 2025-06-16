@@ -1,6 +1,6 @@
-import { getUser, loginUser, registerUser } from '@/controllers/userController.ts';
-import { authUser } from '@/middlewares/authUser.ts';
 import { Router } from 'express';
+import { getUser, loginUser, registerUser } from '../controllers/userController.js';
+import { authUser } from '../middlewares/authUser.js';
 
 const router = Router();
 

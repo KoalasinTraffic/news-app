@@ -1,6 +1,6 @@
-import { User } from '@/models/user.ts';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { User } from '../models/user.js';
 
 export const comparePassword = async (password: string, hashedPassword: string) => {
   return bcryptjs.compare(password, hashedPassword);
@@ -12,13 +12,17 @@ export const hashPassword = async (password: string) => {
 };
 
 export const generateAccessToken = (user: any) => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is not defined');
+  }
   return jwt.sign(
     {
       user: {
         username: user.username,
       },
     },
-    process.env.JWT_SECRET,
+    secret,
     { expiresIn: '1d' }
   );
 };
@@ -62,7 +66,7 @@ export const deleteUserById = async (userId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     User.delete(
       {
-        id: userId.toLowerCase(),
+        username: userId.toLowerCase(),
       },
       (error: Error | null) => {
         if (error) return reject(error);

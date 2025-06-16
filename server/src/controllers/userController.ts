@@ -1,11 +1,11 @@
+import { NextFunction, Request, Response } from 'express';
 import {
   comparePassword,
   createUser,
   generateAccessToken,
   getUserById,
   hashPassword,
-} from '@/services/userService.ts';
-import { NextFunction, Request, Response } from 'express';
+} from '../services/userService.js';
 
 // Confirm user from token matches database
 export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
